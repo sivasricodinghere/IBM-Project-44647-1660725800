@@ -3,16 +3,16 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import inputScript
 
-app = Flask(__name__)
-model = pickle.load(open('Phising_website.pkl','rb'))
+app = Flask(__name__,template_folder='../Flask/static/templates')
+model = pickle.load(open('../Flask/Phishing_Website.pkl','rb'))
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('../Flask/index.html')
 
 @app.route('/predict')
 def predict():
-    return render_template('templates/Final.html')
+    return render_template('Final.html')
 
 ans = ""   
 bns = ""   
@@ -25,11 +25,11 @@ def y_predict():
     output=prediction[0]
     if(output==1):
         pred="You are safe!!  This is a legitimate Website."
-        return render_template('templates/Final.html',bns=pred)
+        return render_template('Final.html',bns=pred)
     
     else:
         pred="You are on the wrong site. Be cautious!"        
-        return render_template('templates/Final.html',ans=pred)
+        return render_template('Final.html',ans=pred)
 
 
 @app.route('/predict_api', methods=['POST'])
